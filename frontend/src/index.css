@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 transition-colors;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-600 to-primary-700 text-white px-6 py-3 rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+  }
+  
+  .btn-secondary {
+    @apply bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 px-6 py-3 rounded-xl hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-all duration-300 font-semibold shadow-md hover:shadow-lg;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 dark:bg-red-500 text-white px-6 py-3 rounded-xl hover:bg-red-700 dark:hover:bg-red-600 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border-2 border-neutral-300 dark:border-neutral-600 rounded-xl bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-6 transition-all duration-300 border border-neutral-100 dark:border-neutral-700 hover:shadow-2xl;
+  }
+  
+  .badge {
+    @apply px-3 py-1 rounded-full text-sm font-semibold;
+  }
+  
+  .badge-success {
+    @apply bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200;
+  }
+  
+  .badge-warning {
+    @apply bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-200;
+  }
+  
+  .badge-danger {
+    @apply bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200;
+  }
+  
+  .badge-info {
+    @apply bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200;
+  }
+  
+  .badge-secondary {
+    @apply bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200;
+  }
+
+  .link-primary {
+    @apply text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold transition-colors duration-200 hover:underline;
+  }
+
+  .gradient-card {
+    @apply bg-gradient-to-br from-primary-500 via-primary-600 to-accent-500 text-white shadow-2xl;
+  }
+  
+  .glass-card {
+    @apply bg-white/80 dark:bg-neutral-800/80 backdrop-blur-lg border border-neutral-200/50 dark:border-neutral-700/50 rounded-2xl shadow-xl;
+  }
+}
+/* Smooth floating for hero image */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+/* RGB moving gradient border animation */
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-move {
+  background-size: 200% 200%;
+  animation: gradient-move 3s linear infinite;
+}
+
+/* Hover glow */
+.group:hover::before {
+  box-shadow: 0 0 30px 8px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Button hover pulse shadow */
+.group:hover span.relative {
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+  transition: all 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Mobile responsiveness helpers - keep content fluid and touch friendly */
+@layer base {
+  img, video, iframe {
+    max-width: 100%;
+    height: auto;
+  }
+
+  pre, code {
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-width: 100%;
+    overflow: auto;
+  }
+
+  table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure main container has modest padding on very small screens to avoid edge clipping */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Helpful utility to avoid long unbroken strings overflowing */
+  .responsive-text {
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  /* Make interactive elements more touch-friendly by default when the class is applied */
+  .touch-friendly {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Mobile-specific improvements to keep desktop UI unchanged */
+@media (max-width: 768px) {
+  /* Reduce heavy hero image height on small screens so content doesn't get cut off */
+  .home-hero img[alt="CareerConnect Hero"] {
+    height: 48vh !important;
+    object-position: top !important;
+  }
+
+  /* Tighter hero paddings and center content for mobile */
+  .home-hero {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 3.25rem !important; /* ~py-13 */
+    padding-bottom: 3.25rem !important;
+  }
+
+  /* Scale down the headline for mobile for better fit and readability */
+  .home-hero .z-10 h1 {
+    font-size: 1.9rem !important; /* ~text-3xl */
+    line-height: 1.15 !important;
+  }
+
+  .home-hero .z-10 p {
+    font-size: 1rem !important; /* smaller body copy */
+    margin-bottom: 1rem !important;
+  }
+
+  /* Stack CTA buttons and make them full width with comfortable tappable size */
+  .home-hero .z-10 .flex.flex-col.sm\:flex-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+  }
+
+  .home-hero .z-10 .relative.inline-flex {
+    width: 100% !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    padding-top: 0.85rem !important;
+    padding-bottom: 0.85rem !important;
+    font-size: 0.95rem !important;
+  }
+
+  /* Make hero text centered and add higher contrast for readability */
+  .home-hero .z-10 {
+    text-align: center !important;
+  }
+
+  /* Footer spacing adjustments to avoid cramped columns on narrow screens */
+  footer .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  footer .grid {
+    gap: 1rem !important;
+  }
+
+  /* Improve touch targets and reduce overflow for cards and common components */
+  .card {
+    padding: 1rem !important;
+    border-radius: 1rem !important;
+  }
+
+  /* Reduce overly large drop-shadows which can look heavy on mobile */
+  .shadow-xl, .shadow-2xl {
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12) !important;
+  }
+
+  /* Reduce heavy background brightness on the hero image to better show text */
+  .home-hero .absolute.inset-0 > img {
+    filter: saturate(0.98) brightness(0.85) contrast(1) !important;
+  }
+
+  /* Allow tables and pre blocks to scroll horizontally when needed */
+  pre, table {
+    -webkit-overflow-scrolling: touch;
+  }
+}

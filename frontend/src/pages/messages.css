@@ -1,0 +1,163 @@
+/* Theme-aware variables for light/dark palettes */
+:root {
+  /* Light-mode defaults */
+  --panel-bg: rgba(255,255,255,0.85);
+  --panel-border: rgba(0,0,0,0.06);
+  --panel-shadow: 0 8px 30px rgba(2,6,23,0.06);
+  --panel-gradient: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,250,0.85));
+  --text-muted: rgba(0,0,0,0.6);
+  --avatar-bg: linear-gradient(135deg,#6b7280,#374151);
+  --bubble-left-bg: rgba(0,0,0,0.04);
+  --bubble-right-bg: linear-gradient(90deg,#06b6d4,#3b82f6);
+  --bubble-text: #111827;
+  --bubble-text-contrast: #111010;
+  --item-hover-shadow: 0 8px 30px rgba(2,6,23,0.12);
+  --panel-radius: 14px;
+  --panel-padding: 12px;
+}
+
+/* dark theme overrides (applies when page root has class `dark`) */
+.dark,
+.theme-dark {
+  --panel-bg: rgba(9,10,13,0.45);
+  --panel-border: rgba(255,255,255,0.04);
+  --panel-shadow: 0 10px 40px rgba(2,6,23,0.6);
+  --panel-gradient: linear-gradient(180deg, rgba(25,26,28,0.6), rgba(15,15,16,0.5));
+  --text-muted: rgba(255,255,255,0.7);
+  --avatar-bg: linear-gradient(135deg,#0f172a,#0b1220);
+  --bubble-left-bg: rgba(255,255,255,0.04);
+  --bubble-right-bg: linear-gradient(90deg,#06b6d4,#3b82f6);
+  --bubble-text: #e6eef8;
+  --bubble-text-contrast: #fff;
+  --item-hover-shadow: 0 12px 34px rgba(2,6,23,0.28);
+  --panel-radius: 14px;
+  --panel-padding: 12px;
+}
+
+/* Explicit light-theme selector for when root has a `.light` class */
+.light,
+.theme-light {
+  --panel-bg: rgba(255,255,255,0.9);
+  --panel-border: rgba(0,0,0,0.06);
+  --panel-shadow: 0 8px 28px rgba(15,23,42,0.06);
+  --panel-gradient: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(248,249,250,0.9));
+  --text-muted: rgba(17,24,39,0.65);
+  --avatar-bg: linear-gradient(135deg,#ef4444,#f97316);
+  --bubble-left-bg: rgba(0,0,0,0.04);
+  --bubble-right-bg: linear-gradient(90deg,#06b6d4,#3b82f6);
+  --bubble-text: #0f172a;
+  --bubble-text-contrast: #fff;
+  --item-hover-shadow: 0 6px 18px rgba(15,23,42,0.06);
+  --panel-radius: 12px;
+  --panel-padding: 10px;
+}
+
+/* Glassmorphism + animations for MessagesInbox */
+.glass-panel {
+  background: var(--panel-bg);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--panel-shadow);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.message-item {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fadeUp 380ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes bubblePop {
+  0% { transform: scale(0.94); opacity: 0.0 }
+  60% { transform: scale(1.02); opacity: 1 }
+  100% { transform: scale(1); }
+}
+
+.bubble {
+  animation: bubblePop 320ms cubic-bezier(.2,.9,.2,1) both;
+}
+
+.soft-shadow {
+  box-shadow: 0 6px 18px rgba(2,6,23,0.45);
+}
+
+/* subtle hover glow for active item */
+.message-item:hover {
+  box-shadow: var(--item-hover-shadow);
+}
+
+/* responsive clamp for conversation bubbles */
+.bubble-left, .bubble-right {
+  max-width: 72%;
+}
+
+/* Centered, compact panel styles */
+.centered-panel {
+  width: 560px; /* normal size */
+  /* message text color (switches with theme) */
+  --message-text-color: #ffffff;
+  background: var(--panel-bg);
+  background-image: var(--panel-gradient);
+  border-radius: var(--panel-radius);
+  padding: var(--panel-padding);
+}
+
+@media (max-width: 1024px) {
+  .centered-panel { width: 100%; }
+}
+
+/* Compact modifier reduces paddings, avatar sizes and typography for a tighter panel */
+.centered-panel.compact {
+  width: 420px;
+  padding: 8px;
+  border-radius: calc(var(--panel-radius) - 2px);
+}
+
+/* Avatar / icon size overrides inside the compact panel */
+.centered-panel.compact .w-14 { width: 40px !important; height: 40px !important; }
+.centered-panel.compact .w-12 { width: 36px !important; height: 36px !important; }
+.centered-panel.compact .text-2xl { font-size: 1.125rem !important; }
+.centered-panel.compact .text-xl { font-size: 1rem !important; }
+.centered-panel.compact .p-6 { padding: 0.75rem !important; }
+.centered-panel.compact .px-6 { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+.centered-panel.compact .py-4 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+.centered-panel.compact .max-w-\[70\%\] { max-width: 68% !important; }
+
+/* Bubble coloring uses variables so both themes look correct */
+.bubble-left { background: var(--bubble-left-bg); color: var(--bubble-text); }
+.bubble-right { background: var(--bubble-right-bg); color: var(--bubble-text-contrast); }
+
+/* Make shadows lighter in light theme using the variable already defined */
+.light .soft-shadow, .theme-light .soft-shadow { box-shadow: 0 6px 18px rgba(15,23,42,0.06); }
+
+/* Override Tailwind neutral text utilities inside the messages panels so they follow theme colors
+   This prevents light-theme neutral classes from making text too faint on white panels. */
+.centered-panel .text-neutral-300,
+.glass-panel .text-neutral-300 {
+  color: var(--message-text-color) !important;
+}
+.centered-panel .text-neutral-400,
+.glass-panel .text-neutral-400 {
+  color: var(--text-muted) !important;
+}
+.centered-panel .text-neutral-100,
+.glass-panel .text-neutral-100 {
+  color: var(--message-text-color) !important;
+}
+.centered-panel .text-neutral-600,
+.glass-panel .text-neutral-600 {
+  color: var(--text-muted) !important;
+}
+
+/* Slightly lift the inbox item background in light mode so items don't look greyed-out */
+.light .centered-panel .message-item {
+  background: rgba(255,255,255,0.96);
+}
+.theme-light .centered-panel .message-item {
+  background: rgba(255,255,255,0.96);
+}
